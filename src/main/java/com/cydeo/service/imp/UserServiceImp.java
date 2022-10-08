@@ -5,6 +5,7 @@ import com.cydeo.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImp extends AbstractMapService<UserDTO, String> implements UserService {
@@ -33,5 +34,11 @@ public class UserServiceImp extends AbstractMapService<UserDTO, String> implemen
     @Override
     public UserDTO findById(String id) {
         return super.findById(id);
+    }
+
+    @Override
+    public List<UserDTO> findManagers() {
+        return super.findAll().stream().filter(user -> user.getRole().getId() == 2).collect(Collectors.toList());
+
     }
 }
