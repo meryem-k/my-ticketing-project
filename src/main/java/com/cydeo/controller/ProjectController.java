@@ -42,20 +42,35 @@ public class ProjectController {
         return "redirect:/project/create";
     }
 
-    @GetMapping("/delete/{projectCode}")
-    public String deleteProject(@PathVariable("projectCode") String projectCode){
-        projectService.deleteById(projectCode);
+    @GetMapping("/delete/{projectcode}")
+    public String deleteProject(@PathVariable("projectcode") String projectcode){
+        projectService.deleteById(projectcode);
         return "redirect:/project/create";
     }
 
-    @GetMapping("/complete/{projectCode}")
-    public String completeProject(@PathVariable("projectCode") String projectCode){
+    @GetMapping("/complete/{projectcode}")
+    public String completeProject(@PathVariable("projectcode") String projectcode){
+        projectService.complete(projectService.findById(projectcode));
+        return "redirect:/project/create";
+    }
 
-        projectService.complete(projectService.findById(projectCode));
+    @GetMapping("/update/{projectcode}")
+    public String editProject(@PathVariable("projectcode") String projectcode,Model model){
+
+        model.addAttribute("project",projectService.findById(projectcode));
+        model.addAttribute("projects",projectService.findAll());
+        model.addAttribute("managers",userService.findManagers());
+
+
+        return "/project/update";
+    }
+
+    @PostMapping("/update")
+    public String updateProject(ProjectDTO project){
+
+        projectService.update(project);
 
         return "redirect:/project/create";
-
-
     }
 
 

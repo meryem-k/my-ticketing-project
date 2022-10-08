@@ -36,7 +36,7 @@
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="projectname" class="col-form-label">Project Name</label>
+                                                    <label for="projectname"  class="col-form-label">Project Name</label>
                                                     <input id="projectname" th:field="*{projectName}" type="text" class="form-control" placeholder="project name">
                                                 </div>
                                             </div>
@@ -53,7 +53,7 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label>Assigned Manager</label>
-                                                    <select name="assignedmanager" th:field="*{assignedManager}" class="custom-select">
+                                                    <select  th:field="*{assignedManager}" class="custom-select">
                                                         <option th:value="''" th:text="Select"></option>
                                                         <option th:each="manager : ${managers}" th:value="${manager.userName}" th:text="${manager.firstName + ' ' + manager.lastName}"></option>
                                                     </select>
@@ -63,14 +63,14 @@
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="startdate">Project Start Date</label>
+                                                    <label for="startdate" >Project Start Date</label>
                                                     <input id="startdate" th:field="*{startDate}" type="date" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="enddate">Project End Date</label>
-                                                    <input id="enddate" th:field="*{endDate}" type="date" class="form-control">
+                                                    <label for="enddate" >Project End Date</label>
+                                                    <input id="enddate"  th:field="*{endDate}" type="date" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -130,13 +130,13 @@
                                             <tr th:each="project : ${projects}">
                                                 <td th:text="${project.projectCode}"></td>
                                                 <td th:text="${project.projectName}"></td>
-                                                <td th:text="${#temporals.format(project.startDate, 'MM.dd.yyyy') + ' ' + #temporals.format(project.endDate, 'MM.dd.yyyy')}"></td>
-                                                <td th:text="${project.assignedManager.firstName + ' ' + project.assignedManager.lastName}"></td>
+                                                <td th:text="${#temporals.format(project.startDate,'MM.dd.yyyy') + '-' + #temporals.format(project.endDate,'MM.dd.yyyy')}"></td>
+                                                <td th:text="${project.assignedManager.firstName + '' + project.assignedManager.lastName}"></td>
                                                 <td th:text="${project.projectStatus.value}"></td>
                                                 <td>
-                                                    <a href="#"><button type="button" class="btn btn-warning rounded-0">Update</button></a>
-                                                    <a th:href="@{/project/delete/{id}(id= ${project.getProjectCode()})}"><button type="button" class="btn btn-danger rounded-0">Delete</button></a>
-                                                    <a th:href="@{project/complete/{id}(id=${project.getProjectCode()})}"><button type="button" class="btn btn-info rounded-0">Complete</button></a>
+                                                    <a th:href="@{/project/update/{id}(id=${project.getProjectCode()})}"><button type="button" class="btn btn-warning rounded-0">Update</button></a>
+                                                    <a th:href="@{/project/delete/{id}(id=${project.getProjectCode()})}"><button type="button" class="btn btn-danger rounded-0">Delete</button></a>
+                                                    <a th:href="@{/project/complete/{id}(id=${project.getProjectCode()})}"><button type="button" class="btn btn-info rounded-0">Complete</button></a>
                                                 </td>
                                             </tr>
                                             </tbody>
