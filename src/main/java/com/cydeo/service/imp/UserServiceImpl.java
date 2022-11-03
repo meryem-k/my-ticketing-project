@@ -1,21 +1,36 @@
 package com.cydeo.service.imp;
 
 import com.cydeo.dto.UserDTO;
+import com.cydeo.entity.User;
+import com.cydeo.mapper.UserMapper;
+import com.cydeo.repository.UserRepository;
 import com.cydeo.service.UserService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
+    }
+
+
     @Override
     public List<UserDTO> listAllUsers() {
+        //bring data from database to controller
+        //service implementation -> repository -> mapper -> convert entity to dto
 
-        //controller calling me and requesting all the roles
-        //so i need to go to database and bring all the roles from there
-        //who is going to give the data from database? Repository becasue only way to retrieve data from database is with sql
+       List<User> userList = userRepository.findAll(Sort.by("firstName"));
 
-        return null;
+       return userList.stream().map(userMapper::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -25,6 +40,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(UserDTO dto) {
+
+        userRepository.save(userMapper.convertToEntity(dto));
+
 
     }
 
