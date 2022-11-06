@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO findByUserName(String username) {
-        return userMapper.convertToDTO(userRepository.findByUsername(username));
+        return userMapper.convertToDTO(userRepository.findByUserName(username));
     }
 
     @Override
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO update(UserDTO dto) {
 
         //find current user
-        User user = userRepository.findByUsername(dto.getUserName());
+        User user = userRepository.findByUserName(dto.getUserName());
 
         //Map updated user dto to entity object
         User convertedUser = userMapper.convertToEntity(dto);
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
     public void delete(String username) {
         // I will not delete from db
         //change the flag and keep in db
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUserName(username);
         user.setIsDeleted(true);
         userRepository.save(user);
     }
