@@ -2,6 +2,7 @@ package com.cydeo.service.imp;
 
 import com.cydeo.dto.ProjectDTO;
 import com.cydeo.entity.Project;
+import com.cydeo.enums.Status;
 import com.cydeo.mapper.ProjectMapper;
 import com.cydeo.repository.ProjectRepository;
 import com.cydeo.service.ProjectService;
@@ -41,15 +42,43 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void save(ProjectDTO dto) {
 
+        dto.setProjectStatus(Status.OPEN);
+        //in the table we need to show the status but from the form
+        // we are not able to input that field so whenever saving a form we need to set the value of the status.
+
+       Project project = projectMapper.convertToEntity(dto);
+       projectRepository.save(project);
+
     }
 
     @Override
     public void update(ProjectDTO dto) {
+
+        Project project = projectRepository.findByProjectCode(dto.getProjectCode());
+        Project convertedProject = projectMapper.convertToEntity(dto);
+        convertedProject.setId(project.getId());
+        convertedProject.setProjectStatus(project.getProjectStatus());
+
+        projectRepository.save(convertedProject);
+
 
     }
 
     @Override
     public void delete(String code) {
 
+        Project project = projectRepository.findByProjectCode(code);
+
+        project.setIsDeleted(true);
+
+        projectRepository.save(project);
+
+    }
+
+    @Override
+    public void complete(String projectcode) {
+        Project project = projectRepository.findByProjectCode(projectcode);
+        project.setProjectStatus(Status.COMPLETE);
+        projectRepository.save(project);
     }
 }
