@@ -1,6 +1,7 @@
 package com.cydeo.service;
 
 import com.cydeo.dto.ProjectDTO;
+import com.cydeo.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,8 @@ public interface ProjectService {
     void complete(String projectcode);
 
     List<ProjectDTO> listAllProjectDetails();
+
+    List<ProjectDTO> readAllByAssignedManager(User assignedManager);
 
 
 }
