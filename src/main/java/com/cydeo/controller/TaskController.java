@@ -38,7 +38,7 @@ public class TaskController {
     }
 
     @PostMapping("/create")
-    public String insertTask(@ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
+    public String insertTask(@Valid @ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
 
@@ -73,13 +73,13 @@ public class TaskController {
 
     }
 
-    //    @PostMapping("/update/{taskId}")
+//    @PostMapping("/update/{taskId}")
 //    public String updateTask(@PathVariable("taskId") Long taskId, TaskDTO task) {
 //        task.setId(taskId);
 //        taskService.update(task);
 //        return "redirect:/task/create";
 //    }
-//
+
     @PostMapping("/update/{id}")
     public String updateTask(@ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
 
@@ -97,6 +97,9 @@ public class TaskController {
         return "redirect:/task/create";
     }
 
+    
+    
+    
     @GetMapping("/employee/pending-tasks")
     public String employeePendingTasks(Model model) {
         model.addAttribute("tasks", taskService.listAllTasksByStatusIsNot(Status.COMPLETE));
@@ -115,7 +118,7 @@ public class TaskController {
     }
 
     @PostMapping("/employee/update/{id}")
-    public String employeeUpdateTask(@ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
+    public String employeeUpdateTask(@Valid @ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
 
