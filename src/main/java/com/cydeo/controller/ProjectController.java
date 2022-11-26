@@ -29,7 +29,7 @@ public class ProjectController {
     public String createProject(Model model){
 
         model.addAttribute("project",new ProjectDTO());
-        model.addAttribute("projects",projectService.listAllProjectDetails());
+        model.addAttribute("projects",projectService.listAllProjects());
         model.addAttribute("managers",userService.listAllByRole("manager"));
 
 
@@ -41,7 +41,7 @@ public class ProjectController {
 
         if (bindingResult.hasErrors()) {
 
-            model.addAttribute("projects", projectService.listAllProjectDetails());
+            model.addAttribute("projects", projectService.listAllProjects());
             model.addAttribute("managers", userService.listAllByRole("manager"));
 
             return "/project/create";
@@ -68,7 +68,7 @@ public class ProjectController {
     public String editProject(@PathVariable("projectcode") String projectcode,Model model){
 
         model.addAttribute("project",projectService.getByProjectCode(projectcode));
-        model.addAttribute("projects",projectService.listAllProjectDetails());
+        model.addAttribute("projects",projectService.listAllProjects());
         model.addAttribute("managers",userService.listAllByRole("manager"));
 
 
@@ -80,7 +80,7 @@ public class ProjectController {
 
         if (bindingResult.hasErrors()) {
 
-            model.addAttribute("projects", projectService.listAllProjectDetails());
+            model.addAttribute("projects", projectService.listAllProjects());
             model.addAttribute("managers", userService.listAllByRole("manager"));
 
             return "/project/update";
@@ -107,5 +107,22 @@ public class ProjectController {
 //        projectService.complete(projectService.findById(projectCode));
 //        return "redirect:/project/manager/project-status";
 //    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

@@ -8,6 +8,7 @@ import com.cydeo.enums.Status;
 import com.cydeo.mapper.ProjectMapper;
 import com.cydeo.mapper.UserMapper;
 import com.cydeo.repository.ProjectRepository;
+import com.cydeo.repository.TaskRepository;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
@@ -120,14 +121,5 @@ public class ProjectServiceImpl implements ProjectService {
             obj.setCompleteTaskCounts(taskService.totalCompletedTasks(project.getProjectCode()));
             return obj;
         }).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ProjectDTO> readAllByAssignedManager(User assignedManager) {
-
-        List<Project> list = projectRepository.findAllByAssignedManager(assignedManager);
-
-        return list.stream().map(projectMapper::convertToDto).collect(Collectors.toList());
-
     }
 }
